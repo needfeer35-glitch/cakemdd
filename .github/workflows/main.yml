@@ -20,6 +20,22 @@ jobs:
     - name: Setup Gradle
       uses: gradle/actions/setup-gradle@v4
 
+    - name: Arrange source files
+      run: |
+        mkdir -p src/main/java/com/cakeauto/client
+        mkdir -p src/main/java/com/cakeauto/mixin
+        mkdir -p src/main/resources
+        cp CakeAutoMod.java src/main/java/com/cakeauto/
+        cp CakeCommand.java src/main/java/com/cakeauto/
+        cp CakeAutoPackets.java src/main/java/com/cakeauto/
+        cp CakeAutoState.java src/main/java/com/cakeauto/
+        cp CakeAutoClient.java src/main/java/com/cakeauto/client/
+        cp CakeAutoScreen.java src/main/java/com/cakeauto/client/
+        cp CraftingResultSlotMixin.java src/main/java/com/cakeauto/mixin/
+        cp fabric.mod.json src/main/resources/
+        cp cakeauto.mixins.json src/main/resources/
+        find src -type f
+
     - name: Build with Gradle
       run: gradle build
 
