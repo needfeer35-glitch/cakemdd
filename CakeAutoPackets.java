@@ -3,7 +3,6 @@ package com.cakeauto;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.network.RegistryByteBuf;
 import net.minecraft.network.codec.PacketCodec;
-import net.minecraft.network.codec.PacketCodecs;
 import net.minecraft.network.packet.CustomPayload;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
@@ -21,7 +20,10 @@ public class CakeAutoPackets {
     public record ToggleAutoPayload(boolean enabled) implements CustomPayload {
         public static final Id<ToggleAutoPayload> ID = new Id<>(Identifier.of("cakeauto", "toggle_auto"));
         public static final PacketCodec<RegistryByteBuf, ToggleAutoPayload> CODEC =
-            PacketCodec.tuple(PacketCodecs.BOOL, ToggleAutoPayload::enabled, ToggleAutoPayload::new);
+            PacketCodec.ofStatic(
+                (buf, val) -> buf.writeBoolean(val.enabled()),
+                buf -> new ToggleAutoPayload(buf.readBoolean())
+            );
         @Override
         public Id<? extends CustomPayload> getId() { return ID; }
     }
