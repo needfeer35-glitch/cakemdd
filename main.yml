@@ -25,18 +25,20 @@ jobs:
         mkdir -p src/main/java/com/cakeauto/client
         mkdir -p src/main/java/com/cakeauto/mixin
         mkdir -p src/main/resources
-        mv CakeAutoMod.java src/main/java/com/cakeauto/
-        mv CakeCommand.java src/main/java/com/cakeauto/
-        mv CakeAutoPackets.java src/main/java/com/cakeauto/
-        mv CakeAutoState.java src/main/java/com/cakeauto/
-        mv CakeAutoClient.java src/main/java/com/cakeauto/client/
-        mv CakeAutoScreen.java src/main/java/com/cakeauto/client/
-        mv CraftingResultSlotMixin.java src/main/java/com/cakeauto/mixin/
-        mv fabric.mod.json src/main/resources/ 2>/dev/null || true
-        mv cakeauto.mixins.json src/main/resources/ 2>/dev/null || true
+        cp CakeAutoMod.java src/main/java/com/cakeauto/
+        cp CakeCommand.java src/main/java/com/cakeauto/
+        cp CakeAutoPackets.java src/main/java/com/cakeauto/
+        cp CakeAutoState.java src/main/java/com/cakeauto/
+        cp CakeAutoClient.java src/main/java/com/cakeauto/client/
+        cp CakeAutoScreen.java src/main/java/com/cakeauto/client/
+        cp CraftingResultSlotMixin.java src/main/java/com/cakeauto/mixin/
+        cp fabric.mod.json src/main/resources/
+        cp cakeauto.mixins.json src/main/resources/
+        echo "=== Structure ==="
+        find src -type f
 
     - name: Build with Gradle
-      run: gradle build
+      run: gradle build --info 2>&1 | tail -50
 
     - name: Upload mod JAR
       uses: actions/upload-artifact@v4
